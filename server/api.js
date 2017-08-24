@@ -23,6 +23,31 @@ api.post('/users', (req, res, next) => {
     .catch(next);
 });
 
+api.put('/users/:userId', (req, res, next) => {
+  	User.update(req.body, { 
+		  where: { id: req.params.userId },
+		  returning:true
+		})
+    .then(user => res.status(200).json(user))
+    .catch(next);
+});
+
+// router.delete('/:playlistId', function (req, res, next) {
+//   req.playlist.destroy()
+//   .then(() => res.status(204).end())
+//   .catch(next);
+// });
+
+api.delete('/users/:userId', (req, res, next) => {
+	User.destroy({
+		where: {
+			id: req.params.userId
+		}
+	})
+	.then(() => res.status(204).end())
+	.catch(next)
+})
+
 api.get('/users/:userId', (req, res, next) => {
   	User.findById(req.params.userId)
     .then(function(user) {
