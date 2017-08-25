@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
 import StudentList from './StudentList';
@@ -27,13 +28,18 @@ export default class App extends Component{
 
 
     render() {
-        return (<div>
-                <Navbar />
+        return (<Router>
+                <div>
+                    <Navbar />
                     <div className="container">
-                        <StudentList students={this.state.users} />
-                        <CampusList campuses={this.state.campuses} />
+                        <Switch>
+                            <Route exact path="/" render={()=> <CampusList campuses={this.state.campuses} />} />
+                            <Route exact path="/campus" render={()=> <CampusList campuses={this.state.campuses} />} />
+                            <Route exact path="/student" render={()=> <StudentList students={this.state.users} />} />
+                        </Switch>    
                     </div>
-                </div>)
+                </div>
+                </Router>)
     }
 }
 
