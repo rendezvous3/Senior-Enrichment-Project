@@ -13,6 +13,9 @@ export default class App extends Component{
             users: [],
             campuses: [],
         }
+
+        this.addStudent = this.addStudent.bind(this);
+
     }
 
     componentDidMount() {
@@ -26,20 +29,36 @@ export default class App extends Component{
     }
 
 
+    addStudent(name, campusId){
+        axios.post('/api/users', { 'name': name, 'campusId': campusId })
+        .then(res => res.data)
+        .then(newStudent => {
+            this.setState({ users: this.state.users.concat(newStudent) })
+            //console.log(this.state.students)
+        })
+        .catch(console.error);
+    }
 
     render() {
-        return (<Router>
+        if(this.state.users.length && this.state.campuses.length){
+            return (<Router>
                 <div>
                     <Navbar />
                     <div className="container">
                         <Switch>
                             <Route exact path="/" render={()=> <CampusList campuses={this.state.campuses} />} />
                             <Route exact path="/campus" render={()=> <CampusList campuses={this.state.campuses} />} />
-                            <Route exact path="/student" render={()=> <StudentList students={this.state.users} />} />
+                            <Route exact path="/student" render={()=> 
+                            <StudentList students={this.state.users} 
+                                         campuses={this.state.campuses}
+                                         addStudent={this.addStudent} />} />
                         </Switch>    
                     </div>
                 </div>
                 </Router>)
+        } else {
+            return(<div>Loading...</div>)
+        }
     }
 }
 

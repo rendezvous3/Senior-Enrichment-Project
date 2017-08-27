@@ -5,11 +5,16 @@ const Footer = (props) => {
     const campuses = props.campuses.map((campus, i) => {
         return (<li key={i} >{ campus.name }</li>);
     })
-    return (<div>
-            <h4>Capmuses</h4>
-            <ul>
-                { campuses }
-            </ul>
+    return (<div className="row">
+            <div className="col-sm-8">
+                <h4>Campuses</h4>
+                <ul>
+                    { campuses }
+                </ul>
+            </div>
+            <div className="col-sm-4">
+                <h4>Add A Campus</h4>
+            </div>
             
     </div>)
 }
