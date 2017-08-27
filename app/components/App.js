@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from './Navbar';
 import StudentList from './StudentList';
 import CampusList from './CampusList';
+import SingleCampus from './SingleCampus';
 
 
 export default class App extends Component{
@@ -48,6 +49,7 @@ export default class App extends Component{
                         <Switch>
                             <Route exact path="/" render={()=> <CampusList campuses={this.state.campuses} />} />
                             <Route exact path="/campus" render={()=> <CampusList campuses={this.state.campuses} />} />
+                            <Route path="/campus/:campusId" component={SingleCampus} />
                             <Route exact path="/student" render={()=> 
                             <StudentList students={this.state.users} 
                                          campuses={this.state.campuses}
