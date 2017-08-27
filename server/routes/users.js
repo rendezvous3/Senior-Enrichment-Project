@@ -1,23 +1,23 @@
-const users = require('express').Router()
+const students = require('express').Router()
 const db = require('../../db');
 const User = require('../../db/models').User;
 
-users.get('/', (req, res, next) => {
+students.get('/', (req, res, next) => {
   	User.findAll({})
-    .then(users => res.json(users))
+    .then(students => res.json(students))
     .catch(next);
 });
 
 
 // Set up Postman -> Headers -> Content-Type -> application/json
 // Body -> {"name":"Thor"}
-users.post('/', (req, res, next) => {
+students.post('/', (req, res, next) => {
   	User.create(req.body)
     .then(user => res.status(201).json(user))
     .catch(next);
 });
 
-users.put('/:userId', (req, res, next) => {
+students.put('/:userId', (req, res, next) => {
   	User.update(req.body, { 
 		  where: { id: req.params.userId },
 		  returning:true
@@ -26,7 +26,7 @@ users.put('/:userId', (req, res, next) => {
     .catch(next);
 });
 
-users.delete('/:userId', (req, res, next) => {
+students.delete('/:userId', (req, res, next) => {
 	User.destroy({
 		where: {
 			id: req.params.userId
@@ -36,7 +36,7 @@ users.delete('/:userId', (req, res, next) => {
 	.catch(next)
 })
 
-users.get('/:userId', (req, res, next) => {
+students.get('/:userId', (req, res, next) => {
   	User.findById(req.params.userId, {
         include: [{ all: true, nested: true }]
     })
@@ -46,4 +46,4 @@ users.get('/:userId', (req, res, next) => {
     .catch(next);
 });
 
-module.exports = users
+module.exports = students

@@ -19,7 +19,7 @@ export default class App extends Component{
     }
 
     componentDidMount() {
-        axios.get('/api/users')
+        axios.get('/api/student')
         .then(res => res.data)
         .then(users => this.setState({ users: users }))
 
@@ -30,7 +30,7 @@ export default class App extends Component{
 
 
     addStudent(name, campusId){
-        axios.post('/api/users', { 'name': name, 'campusId': campusId })
+        axios.post('/api/student', { 'name': name, 'campusId': campusId })
         .then(res => res.data)
         .then(newStudent => {
             this.setState({ users: this.state.users.concat(newStudent) })
